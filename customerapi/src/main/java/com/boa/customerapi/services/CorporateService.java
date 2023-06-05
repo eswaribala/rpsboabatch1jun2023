@@ -1,6 +1,6 @@
 package com.boa.customerapi.services;
 
-import com.boa.customerapi.models.;
+import com.boa.customerapi.models.Corporate;
 import com.boa.customerapi.repositories.CorporateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,5 +65,5 @@ public class CorporateService {
     }
 
 
-    
+
 }
