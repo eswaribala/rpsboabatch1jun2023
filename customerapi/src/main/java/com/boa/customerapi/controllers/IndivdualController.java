@@ -51,7 +51,7 @@ public class IndivdualController {
 
     @GetMapping({"/v1.0/{email}"})
     public ResponseEntity<ResponseWrapper> getIndividualById(@PathVariable("email") String email){
-        List<Individual> indList=this.individualService.getIndividualByEmail(email)
+        List<Individual> indList=this.individualService.getIndividualByEmail(email);
         if(indList.size()>0){
 
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseWrapper(indList));
