@@ -20,6 +20,7 @@ public class Customer {
    @Column(name="Account_No")
     private long accountNo;
    @Embedded
+   //value object
     private FullName name;
     @Column(name="Email",nullable = false,length = 150)
     private String email;
