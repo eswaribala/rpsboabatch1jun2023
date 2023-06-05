@@ -49,8 +49,8 @@ public class IndivdualController {
 
     }
 
-    @GetMapping({"/v1.0/{email}"})
-    public ResponseEntity<ResponseWrapper> getIndividualById(@PathVariable("email") String email){
+    @GetMapping({"/v1.0/email/{email}"})
+    public ResponseEntity<ResponseWrapper> getIndividualByEmail(@PathVariable("email") String email){
         List<Individual> indList=this.individualService.getIndividualByEmail(email);
         if(indList.size()>0){
 

@@ -1,5 +1,6 @@
 package com.boa.customerapi.models;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(hidden = true)
     @Column(name="Address_Id")
     private long addressId;
     @Column(name="Door_No",nullable = false,length = 5)
