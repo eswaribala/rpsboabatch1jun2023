@@ -1,0 +1,68 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+interface Customer{
+    accountNo: ID!
+    name: FullName
+    email: String
+    password: String
+    contactNo: Int
+}
+
+
+type FullName{
+    firstName: String
+    middleName: String
+    lastName: String
+}
+scalar Date
+type Individual implements Customer{
+    accountNo: ID!
+    name: FullName
+    email: String
+    password: String
+    contactNo: Int
+    gender: Gender
+    dob: Date
+
+}
+
+enum Gender{
+MALE,FEMALE,TRANSGENDER
+}
+
+
+
+input IndividualInput{
+    accountNo: ID!
+    name: FullNameInput
+    email: String
+    password: String
+    contactNo: Int
+    gender: Gender
+    dob: Date
+}
+
+input FullNameInput{
+    firstName: String
+    middleName: String
+    lastName: String
+}
+
+
+
+type Query{
+    findAllIndividuals: [Individual]
+    findIndividualById(accountNo: Int): Individual
+    findIndividualByEmail(email: String): [Individual]
+
+}
+
+type Mutation{
+
+    addIndividual(individualInput: IndividualInput): Individual
+    updateIndividual(accountNo: Int, contactNo: Int): Individual
+    deleteIndividual(accountNo: Int): Boolean
+}
