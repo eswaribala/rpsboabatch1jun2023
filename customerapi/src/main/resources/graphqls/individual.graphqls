@@ -2,7 +2,7 @@ schema {
     query: Query
     mutation: Mutation
 }
-
+scalar Date
 interface Customer{
     accountNo: ID!
     name: FullName
@@ -17,7 +17,7 @@ type FullName{
     middleName: String
     lastName: String
 }
-scalar Date
+
 type Individual implements Customer{
     accountNo: ID!
     name: FullName

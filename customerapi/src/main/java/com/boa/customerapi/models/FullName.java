@@ -1,6 +1,7 @@
 package com.boa.customerapi.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Data
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class FullName {
     @Column(name="First_Name",nullable = false,length = 100)
