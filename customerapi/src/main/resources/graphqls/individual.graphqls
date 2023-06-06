@@ -3,12 +3,13 @@ schema {
     mutation: Mutation
 }
 scalar Date
+scalar Long
 interface Customer{
     accountNo: ID!
     name: FullName
     email: String
     password: String
-    contactNo: Int
+    contactNo: Long
 }
 
 
@@ -23,7 +24,7 @@ type Individual implements Customer{
     name: FullName
     email: String
     password: String
-    contactNo: Int
+    contactNo: Long
     gender: Gender
     dob: Date
 
@@ -42,7 +43,7 @@ input IndividualInput{
     name: FullNameInput
     email: String
     password: String @Size(min: 5,max: 8)
-    contactNo: Int
+    contactNo: Long
     gender: Gender
     dob: Date
 }
@@ -65,6 +66,6 @@ type Query{
 type Mutation{
 
     addIndividual(individualInput: IndividualInput): Individual
-    updateIndividual(accountNo: Int, contactNo: Int): Individual
+    updateIndividual(accountNo: Int, contactNo: Long): Individual
     deleteIndividual(accountNo: Int): Boolean
 }

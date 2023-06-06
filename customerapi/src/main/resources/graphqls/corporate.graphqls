@@ -3,7 +3,7 @@ type Corporate implements Customer{
     name: FullName
     email: String
     password: String
-    contactNo: Int
+    contactNo: Long
     companyType:CompanyType
 
 }
@@ -18,7 +18,7 @@ input CorporateInput{
     name: FullNameInput
     email: String
     password: String @Size(min: 5,max: 8)
-    contactNo: Int
+    contactNo: Long
     companyType:CompanyType
 }
 
@@ -30,7 +30,7 @@ extend type Query {
 
 extend type Mutation {
     addCorporate(corporateInput: CorporateInput): Corporate
-    updateCorporate(accountNo: Int, contactNo: Int): Corporate
+    updateCorporate(accountNo: Int, contactNo: Long): Corporate
     deleteCorporate(accountNo: Int): Boolean
 }
 

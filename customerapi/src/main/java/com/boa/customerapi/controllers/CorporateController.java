@@ -54,7 +54,7 @@ public class CorporateController {
 
 
     @PutMapping({"/v1.0/{accountNo}"})
-    public ResponseEntity<ResponseWrapper> updateCorporateById(@PathVariable("accountNo") long accountNo, @RequestParam("contactNo") long contactNo){
+    public ResponseEntity<ResponseWrapper> updateCorporateById(@PathVariable("accountNo") long accountNo, @RequestParam("contactNo") int contactNo){
         Corporate indObj=this.corporateService.updateCorporateById(accountNo,contactNo);
         if(indObj!=null){
 
