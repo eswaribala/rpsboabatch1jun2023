@@ -3,7 +3,10 @@ package com.boa.customerapi.controllers;
 import com.boa.customerapi.dtos.ResponseWrapper;
 import com.boa.customerapi.models.Individual;
 import com.boa.customerapi.services.IndividualService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/individuals")
+@RefreshScope
 public class IndivdualController {
-
+    @Value("${message}")
+    private String message;
     @Autowired
     private IndividualService individualService;
 
@@ -33,6 +38,7 @@ public class IndivdualController {
     @GetMapping({"/v1.0/"})
     public List<Individual> getIndividuals(){
 
+            System.out.println("Message from Github"+message);
             return this.individualService.getAllIndividuals();
     }
     @GetMapping({"/v1.0/{accountNo}"})
