@@ -1,0 +1,21 @@
+POST http://localhost:9091/signup
+
+{
+    "userName":"eswaribala",
+    "password":"Test@123",
+    "roles":[{
+        "roleId":"0",
+        "roleName":"ROLE_ADMIN"
+    },
+    
+    {
+        "roleId":"0",
+        "roleName":"ROLE_USER"
+    }]
+}
+POST http://localhost:9091/signin
+
+{
+    "userName":"eswaribala",
+    "userPwd":"Test@123"
+}
