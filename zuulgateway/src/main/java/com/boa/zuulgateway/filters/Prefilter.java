@@ -4,15 +4,16 @@ import com.boa.zuulgateway.vos.JwtRequest;
 import com.boa.zuulgateway.vos.JwtResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.wnameless.json.flattener.JsonFlattener;
+import com.github.wnameless.json.unflattener.JsonUnflattener;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,6 +33,9 @@ public class Prefilter extends ZuulFilter {
 
     @Value("${authUrl}")
     private String authUrl;
+
+    @Value("${apiUrl}")
+    private String apiUrl;
 
     @Override
     public String filterType() {
@@ -95,6 +99,32 @@ public class Prefilter extends ZuulFilter {
                     postForEntity(authUrl + "signin", request, String.class);
             System.out.println(authResponse.getBody().toString());
 
+            token=parseString(authResponse.getBody().toString());
+
+            //step4
+
+            //Verification
+
+            headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer "+token);
+
+            request = new HttpEntity<String>(null,headers);
+
+            ResponseEntity<String> responseEntityStr = restTemplate.
+                    exchange(authUrl+apiUrl, HttpMethod.GET, request,
+                            String.class);
+            System.out.println(responseEntityStr.getBody());
+            System.out.println("token : {} Verification Passed"+token);
+
+            //Routing requests
+            //default router
+            ctx.setSendZuulResponse(true);
+
+
+
+
+
         }
         catch(Exception exception)
         {
@@ -129,5 +159,39 @@ public class Prefilter extends ZuulFilter {
             return null;
         }
     }
+
+
+    //response string to object and separates the token
+
+    private String parseString(String response)
+    {
+        JSONParser parser = new JSONParser();
+        String token="";
+        try {
+
+            // Put above JSON content to crunchify.txt file and change path location
+            Object obj = parser.parse(response);
+            JSONObject jsonObject = (JSONObject) obj;
+
+            // JsonFlattener: A Java utility used to FLATTEN nested JSON objects
+            String flattenedJson = JsonFlattener.flatten(jsonObject.toString());
+            //log("\n=====Simple Flatten===== \n" + flattenedJson);
+
+            Map<String, Object> flattenedJsonMap = JsonFlattener.flattenAsMap(jsonObject.toString());
+            token=(String) flattenedJsonMap.get("token");
+            //log("\n=====Flatten As Map=====\n" + flattenedJson);
+            // We are using Java8 forEach loop. More info: https://crunchify.com/?p=8047
+            //flattenedJsonMap.forEach((k, v) -> log(k + " : " + v));
+
+            // Unflatten it back to original JSON
+            String nestedJson = JsonUnflattener.unflatten(flattenedJson);
+            System.out.println("\n=====Unflatten it back to original JSON===== \n" + nestedJson);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return token;
+
+    }
+
 
 }
