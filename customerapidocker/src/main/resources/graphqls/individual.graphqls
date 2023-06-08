@@ -1,0 +1,71 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+scalar Date
+scalar Long
+interface Customer{
+    accountNo: ID!
+    name: FullName
+    email: String
+    password: String
+    contactNo: Long
+}
+
+
+type FullName{
+    firstName: String
+    middleName: String
+    lastName: String
+}
+
+type Individual implements Customer{
+    accountNo: ID!
+    name: FullName
+    email: String
+    password: String
+    contactNo: Long
+    gender: Gender
+    dob: Date
+
+}
+
+enum Gender{
+MALE,FEMALE,TRANSGENDER
+}
+
+directive @Size(min : Int = 0, max : Int = 2147483647, message : String = "graphql.validation.Size.message")
+on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+
+input IndividualInput{
+    accountNo: ID!
+    name: FullNameInput
+    email: String
+    password: String @Size(min: 5,max: 8)
+    contactNo: Long
+    gender: Gender
+    dob: Date
+}
+
+input FullNameInput{
+    firstName: String
+    middleName: String
+    lastName: String
+}
+
+
+
+type Query{
+    findAllIndividuals: [Individual]
+    findIndividualById(accountNo: Int): Individual
+    findIndividualByEmail(email: String): [Individual]
+
+}
+
+type Mutation{
+
+    addIndividual(individualInput: IndividualInput): Individual
+    updateIndividual(accountNo: Int, contactNo: Long): Individual
+    deleteIndividual(accountNo: Int): Boolean
+}
