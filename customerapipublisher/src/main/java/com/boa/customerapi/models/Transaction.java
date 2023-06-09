@@ -1,4 +1,4 @@
-package com.boa.customerapi.services;
+package com.boa.customerapi.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Transaction {
 
-    private String transactionId;
+    private long transactionId;
 
     private Integer amount;
 

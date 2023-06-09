@@ -3,11 +3,9 @@ package com.boa.customerapi.controllers;
 import com.boa.customerapi.dtos.ResponseWrapper;
 import com.boa.customerapi.models.Individual;
 import com.boa.customerapi.services.IndividualService;
-import com.boa.customerapi.services.Transaction;
+import com.boa.customerapi.models.Transaction;
 import com.boa.customerapi.services.TransactionService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
