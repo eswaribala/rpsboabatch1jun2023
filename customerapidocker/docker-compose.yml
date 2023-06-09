@@ -35,7 +35,7 @@ services:
 
     networks:
       - boanetwork
-     
+
 ### put all the networks here
 networks:
   boanetwork:
