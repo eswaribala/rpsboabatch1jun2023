@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: customerdeploy
+  name: customerdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customerdeploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: customerdeploy
+    spec:
+      containers:
+      - image: eswaribala/rpsms1jun2023:customerappv1
+        name: customerapp
+        resources: {}          
+        
+        env:
+            - name: MYSQL_URL
+              value: jdbc:mysql://mysql:3306/boams1jun2023customerdb?useSSL=false
+      #imagePullSecrets:  
+      #- name: globalaks-key
+
+status: {}
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: customerservice
+  name: customerservice
+spec:
+    
+  ports:
+  - protocol: TCP
+    port: 7074
+    targetPort: 7074
+    name: http
+  
+  selector:
+    app: customerdeploy
+  type: LoadBalancer
+
