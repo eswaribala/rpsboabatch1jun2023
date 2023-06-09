@@ -3,6 +3,8 @@ package com.boa.customerapi.controllers;
 import com.boa.customerapi.dtos.ResponseWrapper;
 import com.boa.customerapi.models.Individual;
 import com.boa.customerapi.services.IndividualService;
+import com.boa.customerapi.services.Transaction;
+import com.boa.customerapi.services.TransactionService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +22,9 @@ public class IndivdualController {
 
     @Autowired
     private IndividualService individualService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @PostMapping({"/v1.0/"})
     public ResponseEntity<ResponseWrapper> addIndividual(@RequestBody Individual individual){
@@ -94,6 +99,15 @@ public class IndivdualController {
                     new ResponseWrapper("Individual Object "+accountNo +" not deleted"));
         }
 
+    }
+
+    @PostMapping({"/v1.0/publisher"})
+    public ResponseEntity<ResponseWrapper> publishTransaction(@RequestBody Transaction transaction){
+
+        if(transactionService.publishTransaction(transaction))
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseWrapper("Message Published"));
+        else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseWrapper("Message Not published"));
     }
 
 
