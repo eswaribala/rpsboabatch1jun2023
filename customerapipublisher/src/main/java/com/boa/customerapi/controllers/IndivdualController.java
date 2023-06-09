@@ -4,7 +4,9 @@ import com.boa.customerapi.dtos.ResponseWrapper;
 import com.boa.customerapi.models.Individual;
 import com.boa.customerapi.services.IndividualService;
 import com.boa.customerapi.models.Transaction;
-import com.boa.customerapi.services.TransactionService;
+//import com.boa.customerapi.services.TransactionService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,13 @@ import java.util.List;
 
 public class IndivdualController {
 
+
+    private static final Logger LOGGER = LogManager.getLogger(IndivdualController.class);
     @Autowired
     private IndividualService individualService;
 
-    @Autowired
-    private TransactionService transactionService;
+ //   @Autowired
+ //   private TransactionService transactionService;
 
     @PostMapping({"/v1.0/"})
     public ResponseEntity<ResponseWrapper> addIndividual(@RequestBody Individual individual){
@@ -40,6 +44,9 @@ public class IndivdualController {
     @GetMapping({"/v1.0/"})
     public List<Individual> getIndividuals(){
 
+        LOGGER.info("Info level log message");
+        LOGGER.debug("Debug level log message");
+        LOGGER.error("Error level log message");
 
             return this.individualService.getAllIndividuals();
     }
@@ -99,14 +106,14 @@ public class IndivdualController {
 
     }
 
-    @PostMapping({"/v1.0/publisher"})
-    public ResponseEntity<ResponseWrapper> publishTransaction(@RequestBody Transaction transaction){
-
-        if(transactionService.publishTransaction(transaction))
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseWrapper("Message Published"));
-        else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseWrapper("Message Not published"));
-    }
+//    @PostMapping({"/v1.0/publisher"})
+//    public ResponseEntity<ResponseWrapper> publishTransaction(@RequestBody Transaction transaction){
+//
+//        if(transactionService.publishTransaction(transaction))
+//            return ResponseEntity.status(HttpStatus.OK).body(new ResponseWrapper("Message Published"));
+//        else
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseWrapper("Message Not published"));
+//    }
 
 
 }
