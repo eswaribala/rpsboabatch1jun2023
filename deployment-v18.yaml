@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: customerdeploy
+  name: customerdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customerdeploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: customerdeploy
+    spec:
+      containers:
+      - image: eswaribala/vbankdec2022repo:customerapp
+        name: customerapp
+        resources: {}          
+        
+        env:
+            - name: MYSQL_URL
+              value: jdbc:mysql://mysqlservice:3306/boabanknov2022?useSSL=false
+      #imagePullSecrets:  
+      #- name: globalaks-key
+
+status: {}
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: customerservice
+  name: customerservice
+spec:
+    
+  ports:
+  - protocol: TCP
+    port: 6062
+    targetPort: 6062
+    name: http
+  
+  selector:
+    app: customerdeploy
+  type: LoadBalancer
+
