@@ -37,7 +37,7 @@ public class AccountSwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors
                         .basePackage("com.boa.accountapi"))
-                .paths(PathSelectors.regex("/savingsaccount/v1.0.*"))
+                .paths(PathSelectors.regex("/savings/v1.0.*"))
                 .build()
                 .apiInfo(getApiInfo())
                 .forCodeGeneration(true)
@@ -79,7 +79,7 @@ public class AccountSwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors
                         .basePackage("com.boa.accountapi"))
-                .paths(PathSelectors.regex("/currentaccount/v1.0.*"))
+                .paths(PathSelectors.regex("/currents/v1.0.*"))
                 .build()
                 .apiInfo(getApiInfo())
                 .forCodeGeneration(true)
